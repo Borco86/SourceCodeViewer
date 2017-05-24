@@ -3,6 +3,8 @@ package com.tomaszborejko.sourcecodeviewer;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -30,5 +32,16 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.source_code_download_button)
     void onDownloadButtonClick(){
         SourceCodeSingleRecord sourceCodeSingleRecord = new SourceCodeSingleRecord();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 }
