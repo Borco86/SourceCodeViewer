@@ -42,7 +42,18 @@
             android:id="@+id/source_code_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/hello_world_long_text_test" />
+            android:clickable="true"
+            android:scrollHorizontally="true"
+            android:text="@string/hello_world_long_text_test"
+            android:textIsSelectable="true" />
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="150dp"
+        android:layout_height="20dp"
+        android:layout_centerInParent="true"
+        android:indeterminate="false" />
 
 </RelativeLayout>
