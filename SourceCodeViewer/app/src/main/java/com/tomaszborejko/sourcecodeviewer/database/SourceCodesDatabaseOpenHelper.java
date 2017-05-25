@@ -1,6 +1,7 @@
 package com.tomaszborejko.sourcecodeviewer.database;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -35,4 +36,17 @@ public class SourceCodesDatabaseOpenHelper extends SQLiteOpenHelper {
             onCreate(db);
         }
     }
+
+    public Cursor searchQuery(String userInputUrl) {
+        Cursor cursor = getReadableDatabase().query(SourceCodesTableContract.TABLE_NAME,
+                new String[]{
+                        SourceCodesTableContract.COLUMN_SOURCE_CODE
+                }, SourceCodesTableContract.COLUMN_WEBSITE_URL + " LIKE ?", new String[]{
+                        userInputUrl + "%"
+                }, null, null, null);
+        return cursor;
+    }
+
 }
+
+
