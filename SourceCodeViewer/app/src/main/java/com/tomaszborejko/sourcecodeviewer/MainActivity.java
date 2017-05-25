@@ -2,6 +2,8 @@ package com.tomaszborejko.sourcecodeviewer;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -56,8 +58,9 @@ public class MainActivity extends AppCompatActivity {
                             public void onCompleted(Exception e, String result) {
                                 progressBar.setVisibility(View.GONE);
                                 if (result != null) {
-                                    saveSourceCodeIntoDatabase();
+
                                     sourceCodeTextView.setText(result);
+                                    saveSourceCodeIntoDatabase();
                                     Toast.makeText(MainActivity.this, "Source Code loaded successfully", Toast.LENGTH_SHORT).show();
                                 } else {
 
@@ -70,9 +73,15 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Invalid URL address ", Toast.LENGTH_LONG).show();
             }
         } else {
-            // TODO warunek
-            if (sourceCodesDatabaseOpenHelper.searchQuery(getUserInputUri()) != null) {
-                sourceCodeTextView.setText(sourceCodesDatabaseOpenHelper.searchQuery(getUserInputUri()).getString(2));
+            Cursor cursor = searchQuery(getUserInputUri(), sourceCodesDatabaseOpenHelper.getReadableDatabase());
+            if(cursor!=null && cursor.getCount()>0) {
+
+                cursor.moveToNext();
+                String result = cursor.getString(1);
+                sourceCodeTextView.setText(result);
+                cursor.close();
+                Toast.makeText(this, "Source code loaded from database", Toast.LENGTH_SHORT).show();
+
             } else {
                 Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show();
             }
@@ -88,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
         contentValues.put(SourceCodesTableContract.COLUMN_SOURCE_CODE, singleRecord.getSourceCode());
         sourceCodesDatabaseOpenHelper.getWritableDatabase()
                 .insert(SourceCodesTableContract.TABLE_NAME, null, contentValues);
-        sourceCodesDatabaseOpenHelper.close();
     }
 
     @Override
@@ -120,6 +128,15 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean isValidUrl() {
         return Patterns.WEB_URL.matcher(getUserInputUri()).matches();
+    }
+
+    public Cursor searchQuery(String userInputUrl, SQLiteDatabase db) {
+        Cursor cursor = db.query(SourceCodesTableContract.TABLE_NAME,
+                null
+                , SourceCodesTableContract.COLUMN_WEBSITE_URL + " = ?", new String[]{
+                        userInputUrl
+                }, null, null, null);
+        return cursor;
     }
 
 }
