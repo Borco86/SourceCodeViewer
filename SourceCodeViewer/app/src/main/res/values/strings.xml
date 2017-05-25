@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">SourceCodeViewer</string>
+    <string name="source_code_download_success">Source code downloaded successfully</string>
+    <string name="page_not_found__or_not_responding">Page not found / not responding</string>
+    <string name="invalid_url_address">Invalid URL address</string>
+    <string name="source_code_loaded_from_db">Source code loaded from database</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="enter_url_here">Enter URL here</string>
+    <string name="download">Download</string>
 </resources>

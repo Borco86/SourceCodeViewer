@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SourceCodeViewer</string>
+    <string name="source_code_download_success">Pobrano kod źródłowy z internetu</string>
+    <string name="page_not_found__or_not_responding">Nie znaleziono strony / nie odpowiada</string>
+    <string name="invalid_url_address">Błędny adres URL</string>
+    <string name="source_code_loaded_from_db">Pobrano kod źródłowy z bazy danych</string>
+    <string name="no_internet_connection">Brak połączenia z internetem</string>
+    <string name="enter_url_here">Tu wklej link do strony</string>
+    <string name="download">Pobierz</string>
+</resources>

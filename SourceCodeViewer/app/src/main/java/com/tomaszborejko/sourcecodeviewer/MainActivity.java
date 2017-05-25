@@ -61,16 +61,16 @@ public class MainActivity extends AppCompatActivity {
 
                                     sourceCodeTextView.setText(result);
                                     saveSourceCodeIntoDatabase();
-                                    Toast.makeText(MainActivity.this, "Source Code loaded successfully", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity.this, R.string.source_code_download_success, Toast.LENGTH_SHORT).show();
                                 } else {
 
-                                    Toast.makeText(MainActivity.this, "Page does not exist / not responding", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity.this, R.string.page_not_found__or_not_responding, Toast.LENGTH_SHORT).show();
                                 }
 
                             }
                         });
             } else {
-                Toast.makeText(this, "Invalid URL address ", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.invalid_url_address, Toast.LENGTH_LONG).show();
             }
         } else {
             Cursor cursor = searchQuery(getUserInputUri(), sourceCodesDatabaseOpenHelper.getReadableDatabase());
@@ -80,10 +80,10 @@ public class MainActivity extends AppCompatActivity {
                 String result = cursor.getString(1);
                 sourceCodeTextView.setText(result);
                 cursor.close();
-                Toast.makeText(this, "Source code loaded from database", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.source_code_loaded_from_db, Toast.LENGTH_SHORT).show();
 
             } else {
-                Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.no_internet_connection, Toast.LENGTH_LONG).show();
             }
 
         }
