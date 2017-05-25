@@ -44,7 +44,6 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:scrollHorizontally="true"
-            android:text="@string/hello_world_long_text_test"
             android:textIsSelectable="true" />
     </ScrollView>
 

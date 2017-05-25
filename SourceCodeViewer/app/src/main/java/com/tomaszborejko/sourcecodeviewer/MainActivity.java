@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             // TODO warunek
             if (sourceCodesDatabaseOpenHelper.searchQuery(getUserInputUri()) != null) {
-                sourceCodeTextView.setText(sourceCodesDatabaseOpenHelper.searchQuery(getUserInputUri()).getString(0));
+                sourceCodeTextView.setText(sourceCodesDatabaseOpenHelper.searchQuery(getUserInputUri()).getString(2));
             } else {
                 Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show();
             }
@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         contentValues.put(SourceCodesTableContract.COLUMN_SOURCE_CODE, singleRecord.getSourceCode());
         sourceCodesDatabaseOpenHelper.getWritableDatabase()
                 .insert(SourceCodesTableContract.TABLE_NAME, null, contentValues);
+        sourceCodesDatabaseOpenHelper.close();
     }
 
     @Override
