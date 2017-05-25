@@ -44,31 +44,42 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.source_code_download_button)
     void onDownloadButtonClick() {
-        String uri = userInputEditText.getText().toString().toLowerCase();
-        if(isOnline()) {
-            //  if (Patterns.WEB_URL.matcher(uri).matches()) {
-            Ion.with(this).load(uri).asString().setCallback(new FutureCallback<String>() {
-                @Override
-                public void onCompleted(Exception e, String result) {
-                    sourceCodeTextView.setText(result);
-                    Toast.makeText(MainActivity.this, "Source Code loaded successfully", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }else{
+        if (isOnline()) {
+            if (isValidUrl()) {
+                Ion.with(this).load(getUserInputUri()).progressBar(progressBar).asString().setCallback(new FutureCallback<String>() {
+                    @Override
+                    public void onCompleted(Exception e, String result) {
+                        if(result!=null){
+                            sourceCodeTextView.setText(result);
+                            Toast.makeText(MainActivity.this, "Source Code loaded successfully", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(MainActivity.this, "Page does not exist", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+            } else {
+
+                Toast.makeText(this, "Invalid URL address ", Toast.LENGTH_LONG).show();
+            }
+        } else {
             Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show();
         }
-        //}else{
-       //     Toast.makeText(this, "Invalid URL address ", Toast.LENGTH_LONG).show();
-       // }
 
     }
+
+    public String getUserInputUri() {
+        return userInputEditText.getText().toString().toLowerCase();
+    }
+
     public boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            return true;
-        }
-        return false;
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
+    public boolean isValidUrl() {
+        return Patterns.WEB_URL.matcher(getUserInputUri()).matches();
     }
 
     @Override
